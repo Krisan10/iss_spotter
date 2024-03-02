@@ -1,27 +1,38 @@
-const { fetchMyIP, fetchCoordsFromIP, fetchISSFlyoverData } = require('./iss');
+// const { fetchMyIP, fetchCoordsFromIP, fetchISSFlyoverData } = require('./iss');
 
-fetchMyIP((error, ip) => {
+
+const { nextISSTimesForMyLocation } = require('./iss');
+
+nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
-    console.log("It didn't work!" , error);
-    return;
+    return console.log("It didn't work!", error);
   }
-
-  console.log('It worked! Returned IP:' , ip);
+  // success, print out the deets!
+  console.log(passTimes);
 });
 
-fetchCoordsFromIP("99.211.158.105", (error, coordinates) => {
-  if (error) {
-    console.error(`Error fetching coordinates: ${error.message}`);
-  } else {
-    console.log(`Coordinates for IP ${"99.211.158.105"}: ${coordinates.latitude}, ${coordinates.longitude}`);
-  }
-});
+// fetchMyIP((error, ip) => {
+//   if (error) {
+//     console.log("It didn't work!" , error);
+//     return;
+//   }
 
-fetchISSFlyoverData(yourCoordinates, (error, data) => {
-  if (error) {
-    console.error(`Error fetching ISS flyover data: ${error.message}`);
-  } else {
-    console.log('ISS Flyover Data:', data);
-  }
-});
+//   console.log('It worked! Returned IP:' , ip);
+// });
+
+// fetchCoordsFromIP(ipAddress, (error, coordinates) => {
+//   if (error) {
+//     console.error(`Error fetching coordinates: ${error.message}`);
+//   } else {
+//     console.log(`Coordinates for IP ${ipAddress}: ${coordinates.latitude}, ${coordinates.longitude}`);
+//   }
+// });
+
+// fetchISSFlyoverData(yourCoordinates, (error, data) => {
+//   if (error) {
+//     console.error(`Error fetching ISS flyover data: ${error.message}`);
+//   } else {
+//     console.log('ISS Flyover Data:', data);
+//   }
+// });
 
