@@ -98,14 +98,13 @@ const fetchISSFlyoverData = (coordinates, callback) => {
 
     try {
       const data = JSON.parse(body);
-      callback(null, data);
+      const flyoverTimes = data.response || []; // Extract the response property or default to an empty array
+      callback(null, flyoverTimes);
     } catch (parseError) {
       callback(new Error(`Error parsing ISS flyover data: ${parseError}`), null);
     }
   });
 };
-
-const yourCoordinates = { latitude: 37.7749, longitude: -122.4194 }; // Replace with your actual coordinates
 
 module.exports = {
   fetchMyIP,
