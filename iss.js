@@ -79,8 +79,37 @@ fetchCoordsFromIP("99.211.158.105", (error, coordinates) => {
   }
 });
 
+
+const fetchISSFlyoverData = (coordinates, callback) => {
+  const { latitude, longitude } = coordinates;
+  const url = `https://iss-flyover.herokuapp.com/json/?lat=${latitude}&lon=${longitude}`;
+
+  request(url, (error, response, body) => {
+    if (error) {
+      callback(error, null);
+      return;
+    }
+
+    if (response.statusCode !== 200) {
+      const msg = `Status Code ${response.statusCode} when fetching ISS flyover data. Response: ${body}`;
+      callback(new Error(msg), null);
+      return;
+    }
+
+    try {
+      const data = JSON.parse(body);
+      callback(null, data);
+    } catch (parseError) {
+      callback(new Error(`Error parsing ISS flyover data: ${parseError}`), null);
+    }
+  });
+};
+
+const yourCoordinates = { latitude: 37.7749, longitude: -122.4194 }; // Replace with your actual coordinates
+
 module.exports = {
   fetchMyIP,
-  fetchCoordsFromIP
+  fetchCoordsFromIP,
+  fetchISSFlyoverData
 
 };
